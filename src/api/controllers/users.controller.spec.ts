@@ -1,4 +1,5 @@
 import { Request } from "express";
+import { BadRequest } from "http-errors";
 import {
   createMocks,
   mockNext,
@@ -60,6 +61,6 @@ describe("UsersController for failure case", () => {
   it("Should get failed the token data", async () => {
     const res = mockResponse();
     await usersController.registerOktaUser({} as Request, res, mockNext);
-    expect(mockNext).toHaveBeenCalledWith("Failed");
+    expect(mockNext).toHaveBeenCalledWith(new BadRequest("Failed"));
   });
 });

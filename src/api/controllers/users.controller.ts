@@ -22,7 +22,7 @@ export class UsersController {
         .status(200);
     } catch (e) {
       logger.error(e.message);
-      next(new BadRequest(e.errorCauses[0]?.errorSummary || e.message));
+      next(new BadRequest(e.message));
     }
   }
 }

@@ -71,7 +71,7 @@ function getToken() {
 }
 describe("GET /api/books to handle the failure cases", function () {
     var server;
-    var accessToken;
+    var accessToken = "Bearer eyJraWQiOiJQV3NFUDk5NXYyci1CbG1ORzBWTGdTTHpmMVp4WVMtN0hNWVlndUFtSkM0IiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULjRNclFlcEkwZWdwSG1RSXp4QTdWTUxlYmYwUmhJNllCcjAtMDZkTTE3aTAub2FyMnloYjllNVFmTWp2MWw1ZDYiLCJpc3MiOiJodHRwczovL2Rldi05MzE3NzgyMy5va3RhLmNvbS9vYXV0aDIvZGVmYXVsdCIsImF1ZCI6ImFwaTovL2RlZmF1bHQiLCJpYXQiOjE2MjY2OTQ3MzYsImV4cCI6MTYyNjY5NTAzNiwiY2lkIjoiMG9hMTVicndud2Rna3hEb1c1ZDciLCJ1aWQiOiIwMHUxNWI0dGdudUl6WXdDejVkNyIsInNjcCI6WyJvcGVuaWQiLCJvZmZsaW5lX2FjY2VzcyIsInByb2ZpbGUiLCJlbWFpbCJdLCJzdWIiOiJubWFyZWxsYUBwa2dsb2JhbC5jb20ifQ.QOi64fCwnQk04gTXfKPydwVuheSTM6vuo4hbJXi8xB8K9VFTQheCpmNZWovMzVOMRb8uJGjFdgMpDT3b7hRI4v9QfFUeMOKz6OT_i_XSvvZQ7FcTJL7r9zeuv20StLzvlK1ICrMWS5C6wBiafU5LF_Gd3eoMoHM9nKNkes7g0PtTIafnwsYVGhd0Jti6AkGDbXAFvsTi8OoDq33IkLcO6R-lCNVoK0nuHTbJfbJbTIm6BeciIYjQB6Rk4HMw0PkCVMakVbiLzguD-8XgePoRl9hP5dOHDuTpowlAFM-X-YXg74kXbsDNW3e2EPq9uaznDmXl4e5XiJmmO7Gu1W74oQ";
     beforeEach(function () { return __awaiter(void 0, void 0, void 0, function () {
         var tokenData, e_1;
         return __generator(this, function (_a) {

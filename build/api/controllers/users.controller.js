@@ -48,17 +48,16 @@ var UsersController = /** @class */ (function () {
         this.oktaClientService = new okta_client_service_1.OktaClientService();
     }
     UsersController.prototype.registerOktaUser = function (req, res, next) {
-        var _a;
         return __awaiter(this, void 0, void 0, function () {
             var e_1;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
                     case 0:
-                        _b.trys.push([0, 2, , 3]);
+                        _a.trys.push([0, 2, , 3]);
                         logger_1.default.debug("Register Okta User Api invoked");
                         return [4 /*yield*/, this.oktaClientService.register(req.body)];
                     case 1:
-                        _b.sent();
+                        _a.sent();
                         logger_1.default.debug("Okta User is created ");
                         return [2 /*return*/, res
                                 .json({
@@ -67,9 +66,9 @@ var UsersController = /** @class */ (function () {
                             })
                                 .status(200)];
                     case 2:
-                        e_1 = _b.sent();
+                        e_1 = _a.sent();
                         logger_1.default.error(e_1.message);
-                        next(new http_errors_1.BadRequest(((_a = e_1.errorCauses[0]) === null || _a === void 0 ? void 0 : _a.errorSummary) || e_1.message));
+                        next(new http_errors_1.BadRequest(e_1.message));
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
