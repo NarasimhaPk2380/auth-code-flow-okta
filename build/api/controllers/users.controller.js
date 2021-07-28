@@ -41,6 +41,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersController = void 0;
 var http_errors_1 = require("http-errors");
+var error_middleware_1 = require("../middlewares/error.middleware");
 var logger_1 = __importDefault(require("../../loaders/logger"));
 var okta_client_service_1 = require("../../services/okta-client.service");
 var UsersController = /** @class */ (function () {
@@ -67,8 +68,9 @@ var UsersController = /** @class */ (function () {
                                 .status(200)];
                     case 2:
                         e_1 = _a.sent();
-                        logger_1.default.error(e_1.message);
-                        next(new http_errors_1.BadRequest(e_1.message));
+                        // logger.error(e.message);
+                        // next(new BadRequest(e.message));
+                        error_middleware_1.ErrorHandlerInstance.error(new http_errors_1.BadRequest(e_1.message), req, res, next);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }

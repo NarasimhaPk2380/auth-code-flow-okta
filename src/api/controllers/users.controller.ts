@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { BadRequest } from "http-errors";
+import { ErrorHandlerInstance } from "../middlewares/error.middleware";
 import { IRegisterData } from "../../interfaces/IUser";
 import logger from "../../loaders/logger";
 import { OktaClientService } from "../../services/okta-client.service";
@@ -21,8 +22,9 @@ export class UsersController {
         })
         .status(200);
     } catch (e) {
-      logger.error(e.message);
-      next(new BadRequest(e.message));
+      // logger.error(e.message);
+      // next(new BadRequest(e.message));
+      ErrorHandlerInstance.error(new BadRequest(e.message), req, res, next);
     }
   }
 }

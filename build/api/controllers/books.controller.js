@@ -43,6 +43,7 @@ exports.BooksController = void 0;
 var books_service_1 = require("../../services/books.service");
 var logger_1 = __importDefault(require("../../loaders/logger"));
 var http_errors_1 = require("http-errors");
+var error_middleware_1 = require("../middlewares/error.middleware");
 var typedi_1 = __importDefault(require("typedi"));
 var BooksController = /** @class */ (function () {
     function BooksController() {
@@ -63,8 +64,9 @@ var BooksController = /** @class */ (function () {
                         return [2 /*return*/, res.json(booksList).status(200)];
                     case 2:
                         e_1 = _a.sent();
-                        logger_1.default.error(e_1.message);
-                        next(e_1.message);
+                        // logger.error(e.message);
+                        // next(e.message);
+                        error_middleware_1.ErrorHandlerInstance.error(e_1, req, res, next);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -91,8 +93,9 @@ var BooksController = /** @class */ (function () {
                                 .status(200)];
                     case 2:
                         e_2 = _a.sent();
-                        logger_1.default.error(e_2.message);
-                        next(e_2.message);
+                        // logger.error(e.message);
+                        // next(e.message);
+                        error_middleware_1.ErrorHandlerInstance.error(e_2, req, res, next);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -110,13 +113,17 @@ var BooksController = /** @class */ (function () {
                         return [4 /*yield*/, this.booksService.getBookDetails(req.params.book_id)];
                     case 1:
                         bookDetails = _a.sent();
+                        if (!bookDetails) {
+                            throw new Error();
+                        }
                         logger_1.default.debug("get book details response given");
                         return [2 /*return*/, res.json(bookDetails).status(200)];
                     case 2:
                         e_3 = _a.sent();
-                        e_3.message = "BookId is not found";
-                        logger_1.default.error(e_3.message);
-                        next(new http_errors_1.NotFound(e_3.message));
+                        // e.message = "BookId is not found";
+                        // logger.error(e.message);
+                        // next(new NotFound(e.message));
+                        error_middleware_1.ErrorHandlerInstance.error(new http_errors_1.NotFound("BookId is not found"), req, res, next);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -143,10 +150,10 @@ var BooksController = /** @class */ (function () {
                                 .status(200)];
                     case 2:
                         e_4 = _a.sent();
-                        e_4.message = "BookId is not found";
-                        logger_1.default.error(e_4.message);
-                        next(new http_errors_1.NotFound(e_4.message));
-                        next(e_4);
+                        // e.message = "BookId is not found";
+                        // logger.error(e.message);
+                        // next(new NotFound(e.message));
+                        error_middleware_1.ErrorHandlerInstance.error(new http_errors_1.NotFound("BookId is not found"), req, res, next);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -173,9 +180,10 @@ var BooksController = /** @class */ (function () {
                                 .status(200)];
                     case 2:
                         e_5 = _a.sent();
-                        e_5.message = "BookId is not found";
-                        logger_1.default.error(e_5.message);
-                        next(new http_errors_1.NotFound(e_5.message));
+                        // e.message = "BookId is not found";
+                        // logger.error(e.message);
+                        // next(new NotFound(e.message));
+                        error_middleware_1.ErrorHandlerInstance.error(new http_errors_1.NotFound("BookId is not found"), req, res, next);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -200,9 +208,10 @@ var BooksController = /** @class */ (function () {
                         return [2 /*return*/, res.json(reviewsList === null || reviewsList === void 0 ? void 0 : reviewsList.reviews).status(200)];
                     case 2:
                         e_6 = _a.sent();
-                        e_6.message = "BookId is not found";
-                        logger_1.default.error(e_6.message);
-                        next(new http_errors_1.NotFound(e_6.message));
+                        // e.message = "BookId is not found";
+                        // logger.error(e.message);
+                        // next(new NotFound(e.message));
+                        error_middleware_1.ErrorHandlerInstance.error(new http_errors_1.NotFound("BookId is not found"), req, res, next);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -232,9 +241,10 @@ var BooksController = /** @class */ (function () {
                                 .status(200)];
                     case 2:
                         e_7 = _a.sent();
-                        e_7.message = "BookId is not found";
-                        logger_1.default.error(e_7.message);
-                        next(new http_errors_1.NotFound(e_7.message));
+                        // e.message = "BookId is not found";
+                        // logger.error(e.message);
+                        // next(new NotFound(e.message));
+                        error_middleware_1.ErrorHandlerInstance.error(new http_errors_1.NotFound("BookId is not found"), req, res, next);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -264,9 +274,10 @@ var BooksController = /** @class */ (function () {
                                 .status(200)];
                     case 2:
                         e_8 = _a.sent();
-                        e_8.message = "Either BookId or Review Id is not found";
-                        logger_1.default.error(e_8.message);
-                        next(new http_errors_1.NotFound(e_8.message));
+                        // e.message = "Either BookId or Review Id is not found";
+                        // logger.error(e.message);
+                        // next(new NotFound(e.message));
+                        error_middleware_1.ErrorHandlerInstance.error(new http_errors_1.NotFound("Either BookId or Review Id is not found"), req, res, next);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -291,9 +302,10 @@ var BooksController = /** @class */ (function () {
                         return [2 /*return*/, res.json(bookReview).status(200)];
                     case 2:
                         e_9 = _a.sent();
-                        e_9.message = "Either BookId or Review Id is not found";
-                        logger_1.default.error(e_9.message);
-                        next(new http_errors_1.NotFound(e_9.message));
+                        // e.message = "Either BookId or Review Id is not found";
+                        // logger.error(e.message);
+                        // next(new NotFound(e.message));
+                        error_middleware_1.ErrorHandlerInstance.error(new http_errors_1.NotFound("Either BookId or Review Id is not found"), req, res, next);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -325,9 +337,10 @@ var BooksController = /** @class */ (function () {
                                 .status(200)];
                     case 3:
                         e_10 = _a.sent();
-                        e_10.message = "Either BookId or Review Id is not found";
-                        logger_1.default.error(e_10.message);
-                        next(new http_errors_1.NotFound(e_10.message));
+                        // e.message = "Either BookId or Review Id is not found";
+                        // logger.error(e.message);
+                        // next(new NotFound(e.message));
+                        error_middleware_1.ErrorHandlerInstance.error(new http_errors_1.NotFound("Either BookId or Review Id is not found"), req, res, next);
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }

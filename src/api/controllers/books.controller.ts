@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { BooksService } from "../../services/books.service";
 import logger from "../../loaders/logger";
 import { NotFound } from "http-errors";
+import { ErrorHandlerInstance } from "../middlewares/error.middleware";
 import Container from "typedi";
 
 export class BooksController {
@@ -16,8 +17,9 @@ export class BooksController {
       logger.debug("Get books Api response given");
       return res.json(booksList).status(200);
     } catch (e) {
-      logger.error(e.message);
-      next(e.message);
+      // logger.error(e.message);
+      // next(e.message);
+      ErrorHandlerInstance.error(e, req, res, next);
     }
   }
   async createBook(req: Request, res: Response, next: NextFunction) {
@@ -32,8 +34,9 @@ export class BooksController {
         })
         .status(200);
     } catch (e) {
-      logger.error(e.message);
-      next(e.message);
+      // logger.error(e.message);
+      // next(e.message);
+      ErrorHandlerInstance.error(e, req, res, next);
     }
   }
   async getBookDetails(req: Request, res: Response, next: NextFunction) {
@@ -42,12 +45,21 @@ export class BooksController {
       const bookDetails = await this.booksService.getBookDetails(
         req.params.book_id
       );
+      if (!bookDetails) {
+        throw new Error();
+      }
       logger.debug("get book details response given");
       return res.json(bookDetails).status(200);
     } catch (e) {
-      e.message = "BookId is not found";
-      logger.error(e.message);
-      next(new NotFound(e.message));
+      // e.message = "BookId is not found";
+      // logger.error(e.message);
+      // next(new NotFound(e.message));
+      ErrorHandlerInstance.error(
+        new NotFound("BookId is not found"),
+        req,
+        res,
+        next
+      );
     }
   }
   async updateBook(req: Request, res: Response, next: NextFunction) {
@@ -65,10 +77,15 @@ export class BooksController {
         .json({ statusCode: 200, message: "Successfully updated the book" })
         .status(200);
     } catch (e) {
-      e.message = "BookId is not found";
-      logger.error(e.message);
-      next(new NotFound(e.message));
-      next(e);
+      // e.message = "BookId is not found";
+      // logger.error(e.message);
+      // next(new NotFound(e.message));
+      ErrorHandlerInstance.error(
+        new NotFound("BookId is not found"),
+        req,
+        res,
+        next
+      );
     }
   }
   async deleteBook(req: Request, res: Response, next: NextFunction) {
@@ -85,9 +102,15 @@ export class BooksController {
         .json({ statusCode: 200, message: "Successfully deleted the book" })
         .status(200);
     } catch (e) {
-      e.message = "BookId is not found";
-      logger.error(e.message);
-      next(new NotFound(e.message));
+      // e.message = "BookId is not found";
+      // logger.error(e.message);
+      // next(new NotFound(e.message));
+      ErrorHandlerInstance.error(
+        new NotFound("BookId is not found"),
+        req,
+        res,
+        next
+      );
     }
   }
   async getBookReviews(req: Request, res: Response, next: NextFunction) {
@@ -102,9 +125,15 @@ export class BooksController {
       logger.info("Book reviews response is given");
       return res.json(reviewsList?.reviews).status(200);
     } catch (e) {
-      e.message = "BookId is not found";
-      logger.error(e.message);
-      next(new NotFound(e.message));
+      // e.message = "BookId is not found";
+      // logger.error(e.message);
+      // next(new NotFound(e.message));
+      ErrorHandlerInstance.error(
+        new NotFound("BookId is not found"),
+        req,
+        res,
+        next
+      );
     }
   }
   async createBookReview(req: Request, res: Response, next: NextFunction) {
@@ -125,9 +154,15 @@ export class BooksController {
         })
         .status(200);
     } catch (e) {
-      e.message = "BookId is not found";
-      logger.error(e.message);
-      next(new NotFound(e.message));
+      // e.message = "BookId is not found";
+      // logger.error(e.message);
+      // next(new NotFound(e.message));
+      ErrorHandlerInstance.error(
+        new NotFound("BookId is not found"),
+        req,
+        res,
+        next
+      );
     }
   }
   async updateBookReview(req: Request, res: Response, next: NextFunction) {
@@ -149,9 +184,15 @@ export class BooksController {
         })
         .status(200);
     } catch (e) {
-      e.message = "Either BookId or Review Id is not found";
-      logger.error(e.message);
-      next(new NotFound(e.message));
+      // e.message = "Either BookId or Review Id is not found";
+      // logger.error(e.message);
+      // next(new NotFound(e.message));
+      ErrorHandlerInstance.error(
+        new NotFound("Either BookId or Review Id is not found"),
+        req,
+        res,
+        next
+      );
     }
   }
   async getBookReview(req: Request, res: Response, next: NextFunction) {
@@ -166,9 +207,15 @@ export class BooksController {
       logger.debug("Get book review response is given");
       return res.json(bookReview).status(200);
     } catch (e) {
-      e.message = "Either BookId or Review Id is not found";
-      logger.error(e.message);
-      next(new NotFound(e.message));
+      // e.message = "Either BookId or Review Id is not found";
+      // logger.error(e.message);
+      // next(new NotFound(e.message));
+      ErrorHandlerInstance.error(
+        new NotFound("Either BookId or Review Id is not found"),
+        req,
+        res,
+        next
+      );
     }
   }
   async deleteBookReview(req: Request, res: Response, next: NextFunction) {
@@ -189,9 +236,15 @@ export class BooksController {
         })
         .status(200);
     } catch (e) {
-      e.message = "Either BookId or Review Id is not found";
-      logger.error(e.message);
-      next(new NotFound(e.message));
+      // e.message = "Either BookId or Review Id is not found";
+      // logger.error(e.message);
+      // next(new NotFound(e.message));
+      ErrorHandlerInstance.error(
+        new NotFound("Either BookId or Review Id is not found"),
+        req,
+        res,
+        next
+      );
     }
   }
 }

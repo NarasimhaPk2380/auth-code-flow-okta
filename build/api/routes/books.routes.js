@@ -1,14 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = require("express");
-var auth_middleware_1 = require("../middlewares/auth.middleware");
 var joi_validation_middleware_1 = require("../middlewares/joi-validation.middleware");
 var controllers_1 = require("../controllers");
 var validation_schema_1 = require("../../helpers/validation_schema");
 var router = express_1.Router();
 exports.default = (function (app) {
     //app.use("/books", oidc.ensureAuthenticated(), router);
-    app.use("/books", auth_middleware_1.authMiddleware, router);
+    app.use("/books", router);
     router.get("/", controllers_1.booksController.getBooks.bind(controllers_1.booksController));
     router.get("/:book_id", controllers_1.booksController.getBookDetails.bind(controllers_1.booksController));
     router.get("/:book_id/reviews", controllers_1.booksController.getBookReviews.bind(controllers_1.booksController));
