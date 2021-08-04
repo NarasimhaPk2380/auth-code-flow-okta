@@ -6,6 +6,7 @@ import {
   mockResponse,
 } from "../../helpers/tests/mocking-funtions";
 import { OktaClientService } from "../../services/okta-client.service";
+import { ErrorHandlerInstance } from "../middlewares/error.middleware";
 import { UsersController } from "./users.controller";
 const availableMethodsInOktaClientSrvc: any = {
   register: {
@@ -56,11 +57,12 @@ describe("UsersController for failure case", () => {
   beforeEach(() => {
     usersController = new UsersController();
     usersController.oktaClientService = instanceOfOktaClientServiceMock;
+    jest.spyOn(ErrorHandlerInstance, "error").mockImplementation();
   });
 
   it("Should get failed the token data", async () => {
     const res = mockResponse();
     await usersController.registerOktaUser({} as Request, res, mockNext);
-    expect(mockNext).toHaveBeenCalledWith(new BadRequest("Failed"));
+    expect(ErrorHandlerInstance.error).toHaveBeenCalled();
   });
 });

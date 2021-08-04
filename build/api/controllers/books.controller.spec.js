@@ -51,6 +51,7 @@ require("reflect-metadata");
 var books_service_1 = require("../../services/books.service");
 var mock_data_1 = require("../../helpers/tests/mock-data");
 var books_controller_1 = require("./books.controller");
+var error_middleware_1 = require("../middlewares/error.middleware");
 var mocking_funtions_1 = require("../../helpers/tests/mocking-funtions");
 var availableMethodsInBookSrvc = {
     getBooks: [mock_data_1.bookData],
@@ -71,6 +72,14 @@ var availableFailureMethodsInBookSrvc = {
     createBook: function () {
         throw new Error("Failed to create the books");
     },
+    getBookDetails: function () { return Promise.resolve(null); },
+    updateBook: function () { return Promise.resolve(null); },
+    deleteBook: function () { return Promise.resolve(null); },
+    getBookReviews: function () { return Promise.resolve(null); },
+    createBookReview: function () { return Promise.resolve(null); },
+    getBookReview: function () { return Promise.resolve(null); },
+    updateBookReview: function () { return Promise.resolve(null); },
+    deleteBookReview: function () { return Promise.resolve(null); },
 };
 describe("BooksController", function () {
     var booksController;
@@ -261,6 +270,7 @@ describe("BooksController Failures", function () {
     beforeEach(function () {
         booksController = new books_controller_1.BooksController();
         booksController.booksService = availableFailureMethodsInBookSrvc;
+        jest.spyOn(error_middleware_1.ErrorHandlerInstance, "error").mockImplementation();
     });
     it("Should create", function () {
         expect(booksController).toBeTruthy();
@@ -274,7 +284,7 @@ describe("BooksController Failures", function () {
                     return [4 /*yield*/, booksController.getBooks({}, res, mocking_funtions_1.mockNext)];
                 case 1:
                     _a.sent();
-                    expect(mocking_funtions_1.mockNext).toHaveBeenCalledWith("Failed to get the books");
+                    expect(error_middleware_1.ErrorHandlerInstance.error).toHaveBeenCalled();
                     return [2 /*return*/];
             }
         });
@@ -288,7 +298,119 @@ describe("BooksController Failures", function () {
                     return [4 /*yield*/, booksController.createBook({}, res, mocking_funtions_1.mockNext)];
                 case 1:
                     _a.sent();
-                    expect(mocking_funtions_1.mockNext).toHaveBeenCalledWith("Failed to create the books");
+                    expect(error_middleware_1.ErrorHandlerInstance.error).toHaveBeenCalled();
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it("Should get the book details", function () { return __awaiter(void 0, void 0, void 0, function () {
+        var res;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    res = mocking_funtions_1.mockResponse();
+                    return [4 /*yield*/, booksController.getBookDetails({ params: {} }, res, mocking_funtions_1.mockNext)];
+                case 1:
+                    _a.sent();
+                    expect(error_middleware_1.ErrorHandlerInstance.error).toHaveBeenCalled();
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it("Should update the book details", function () { return __awaiter(void 0, void 0, void 0, function () {
+        var res;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    res = mocking_funtions_1.mockResponse();
+                    return [4 /*yield*/, booksController.updateBook({ params: {} }, res, mocking_funtions_1.mockNext)];
+                case 1:
+                    _a.sent();
+                    expect(error_middleware_1.ErrorHandlerInstance.error).toHaveBeenCalled();
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it("Should delte the book", function () { return __awaiter(void 0, void 0, void 0, function () {
+        var res;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    res = mocking_funtions_1.mockResponse();
+                    return [4 /*yield*/, booksController.deleteBook({ params: {} }, res, mocking_funtions_1.mockNext)];
+                case 1:
+                    _a.sent();
+                    expect(error_middleware_1.ErrorHandlerInstance.error).toHaveBeenCalled();
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it("Should get the bookreviews", function () { return __awaiter(void 0, void 0, void 0, function () {
+        var res;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    res = mocking_funtions_1.mockResponse();
+                    return [4 /*yield*/, booksController.getBookReviews({ params: {} }, res, mocking_funtions_1.mockNext)];
+                case 1:
+                    _a.sent();
+                    expect(error_middleware_1.ErrorHandlerInstance.error).toHaveBeenCalled();
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it("Should create the bookreviews", function () { return __awaiter(void 0, void 0, void 0, function () {
+        var res;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    res = mocking_funtions_1.mockResponse();
+                    return [4 /*yield*/, booksController.createBookReview({ params: {} }, res, mocking_funtions_1.mockNext)];
+                case 1:
+                    _a.sent();
+                    expect(error_middleware_1.ErrorHandlerInstance.error).toHaveBeenCalled();
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it("Should update the bookreviews", function () { return __awaiter(void 0, void 0, void 0, function () {
+        var res;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    res = mocking_funtions_1.mockResponse();
+                    return [4 /*yield*/, booksController.updateBookReview({ params: {} }, res, mocking_funtions_1.mockNext)];
+                case 1:
+                    _a.sent();
+                    expect(error_middleware_1.ErrorHandlerInstance.error).toHaveBeenCalled();
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it("Should get the bookreview", function () { return __awaiter(void 0, void 0, void 0, function () {
+        var res;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    res = mocking_funtions_1.mockResponse();
+                    return [4 /*yield*/, booksController.getBookReview({ params: {} }, res, mocking_funtions_1.mockNext)];
+                case 1:
+                    _a.sent();
+                    expect(error_middleware_1.ErrorHandlerInstance.error).toHaveBeenCalled();
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it("Should delte the bookreviews", function () { return __awaiter(void 0, void 0, void 0, function () {
+        var res;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    res = mocking_funtions_1.mockResponse();
+                    return [4 /*yield*/, booksController.deleteBookReview({ params: {} }, res, mocking_funtions_1.mockNext)];
+                case 1:
+                    _a.sent();
+                    expect(error_middleware_1.ErrorHandlerInstance.error).toHaveBeenCalled();
                     return [2 /*return*/];
             }
         });

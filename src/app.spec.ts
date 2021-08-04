@@ -27,7 +27,7 @@ async function getToken() {
 describe("GET /api/books to handle the failure cases", () => {
   let server: Server;
   let accessToken: string =
-    "Bearer eyJraWQiOiJQV3NFUDk5NXYyci1CbG1ORzBWTGdTTHpmMVp4WVMtN0hNWVlndUFtSkM0IiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULjRNclFlcEkwZWdwSG1RSXp4QTdWTUxlYmYwUmhJNllCcjAtMDZkTTE3aTAub2FyMnloYjllNVFmTWp2MWw1ZDYiLCJpc3MiOiJodHRwczovL2Rldi05MzE3NzgyMy5va3RhLmNvbS9vYXV0aDIvZGVmYXVsdCIsImF1ZCI6ImFwaTovL2RlZmF1bHQiLCJpYXQiOjE2MjY2OTQ3MzYsImV4cCI6MTYyNjY5NTAzNiwiY2lkIjoiMG9hMTVicndud2Rna3hEb1c1ZDciLCJ1aWQiOiIwMHUxNWI0dGdudUl6WXdDejVkNyIsInNjcCI6WyJvcGVuaWQiLCJvZmZsaW5lX2FjY2VzcyIsInByb2ZpbGUiLCJlbWFpbCJdLCJzdWIiOiJubWFyZWxsYUBwa2dsb2JhbC5jb20ifQ.QOi64fCwnQk04gTXfKPydwVuheSTM6vuo4hbJXi8xB8K9VFTQheCpmNZWovMzVOMRb8uJGjFdgMpDT3b7hRI4v9QfFUeMOKz6OT_i_XSvvZQ7FcTJL7r9zeuv20StLzvlK1ICrMWS5C6wBiafU5LF_Gd3eoMoHM9nKNkes7g0PtTIafnwsYVGhd0Jti6AkGDbXAFvsTi8OoDq33IkLcO6R-lCNVoK0nuHTbJfbJbTIm6BeciIYjQB6Rk4HMw0PkCVMakVbiLzguD-8XgePoRl9hP5dOHDuTpowlAFM-X-YXg74kXbsDNW3e2EPq9uaznDmXl4e5XiJmmO7Gu1W74oQ";
+    "Bearer eyJraWQiOiJQV3NFUDk5NXYyci1CbG1ORzBWTGdTTHpmMVp4WVMtN0hNWVlndUFtSkM0IiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULlhhUDlPUDZ2UnpQZjhvS2xsZm96Q3k3cTJlZUx2clF5ZUZSdTJ0M0taOXMub2FyMzhua2J1OE1OdFFIYlg1ZDYiLCJpc3MiOiJodHRwczovL2Rldi05MzE3NzgyMy5va3RhLmNvbS9vYXV0aDIvZGVmYXVsdCIsImF1ZCI6ImFwaTovL2RlZmF1bHQiLCJpYXQiOjE2Mjc5Nzg1NDQsImV4cCI6MTYyNzk4MjE0NCwiY2lkIjoiMG9hMTVicndud2Rna3hEb1c1ZDciLCJ1aWQiOiIwMHUxNWI0dGdudUl6WXdDejVkNyIsInNjcCI6WyJvZmZsaW5lX2FjY2VzcyIsInByb2ZpbGUiLCJvcGVuaWQiLCJlbWFpbCJdLCJzdWIiOiJubWFyZWxsYUBwa2dsb2JhbC5jb20ifQ.J5_KQEUmdg_bWhQFtcYdS5Oy5hi6zSkZmg1VJvJKEZB7KuYtbi9ygL8yqn1BsnOhCskKg6jGHtdGc4OG13vdMW-VP200bIFiPbb18XH2oMz-OCqPbSFKufARuzDuavv_APl39N0vF0z_Nto1-gy22eHYCvUlHINX8374r_fQMd5O9P6UYB5N1qf8SOGypuce7Mh19sx_8qGe4hVsBjziyS_AOVSFt-o6TZ5BJrjhmJDxzf_x4Dy0JXC6DEwABepa8_gbhcDKjB87mDN0fFaW6kIHYb7YBO6YujRDVHYz5coGY7kheRISCEYlMwMqn9vd6Q4qRR0sz0VOU2nz_ECnQw";
   beforeEach(async () => {
     server = require("./app");
     try {
@@ -95,11 +95,8 @@ describe("GET /api/books to handle the failure cases", () => {
       .get("/api/books/546")
       .set({ Authorization: accessToken })
       .then((data) => {
-        console.log(data.body);
-        expect(data.body).toEqual({
-          statusCode: 404,
-          message: "BookId is not found",
-        });
+        // console.log(data.body);
+        expect(data.body.message).toBe("BookId is not found");
         done();
       });
   });
@@ -109,10 +106,7 @@ describe("GET /api/books to handle the failure cases", () => {
       .send(bookData)
       .set({ Authorization: accessToken })
       .then((data) => {
-        expect(data.body).toEqual({
-          statusCode: 404,
-          message: "BookId is not found",
-        });
+        expect(data.body.message).toBe("BookId is not found");
         done();
       });
   });
@@ -122,10 +116,7 @@ describe("GET /api/books to handle the failure cases", () => {
       .delete("/api/books/546")
       .set({ Authorization: accessToken })
       .then((data) => {
-        expect(data.body).toEqual({
-          statusCode: 404,
-          message: "BookId is not found",
-        });
+        expect(data.body.message).toBe("BookId is not found");
         done();
       });
   });
@@ -135,10 +126,7 @@ describe("GET /api/books to handle the failure cases", () => {
       .get("/api/books/546/reviews")
       .set({ Authorization: accessToken })
       .then((data) => {
-        expect(data.body).toEqual({
-          statusCode: 404,
-          message: "BookId is not found",
-        });
+        expect(data.body.message).toBe("BookId is not found");
         done();
       });
   });
@@ -148,10 +136,7 @@ describe("GET /api/books to handle the failure cases", () => {
       .send(reviewData)
       .set({ Authorization: accessToken })
       .then((data) => {
-        expect(data.body).toEqual({
-          statusCode: 404,
-          message: "BookId is not found",
-        });
+        expect(data.body.message).toBe("BookId is not found");
         done();
       });
   });
@@ -160,11 +145,10 @@ describe("GET /api/books to handle the failure cases", () => {
       .get("/api/books/546/reviews/324")
       .set({ Authorization: accessToken })
       .then((data) => {
-        console.log(data.body);
-        expect(data.body).toEqual({
-          statusCode: 404,
-          message: "Either BookId or Review Id is not found",
-        });
+        // console.log(data.body);
+        expect(data.body.message).toBe(
+          "Either BookId or Review Id is not found"
+        );
         done();
       });
   });
@@ -175,10 +159,9 @@ describe("GET /api/books to handle the failure cases", () => {
       .send(reviewData)
       .set({ Authorization: accessToken })
       .then((data) => {
-        expect(data.body).toEqual({
-          statusCode: 404,
-          message: "Either BookId or Review Id is not found",
-        });
+        expect(data.body.message).toBe(
+          "Either BookId or Review Id is not found"
+        );
         done();
       });
   });
@@ -187,10 +170,9 @@ describe("GET /api/books to handle the failure cases", () => {
       .delete("/api/books/546/reviews/324")
       .set({ Authorization: accessToken })
       .then((data) => {
-        expect(data.body).toEqual({
-          statusCode: 404,
-          message: "Either BookId or Review Id is not found",
-        });
+        expect(data.body.message).toBe(
+          "Either BookId or Review Id is not found"
+        );
         done();
       });
   });

@@ -2,13 +2,13 @@ import "reflect-metadata";
 import { BooksService } from "../../services/books.service";
 import { bookData, reviewData } from "../../helpers/tests/mock-data";
 import { BooksController } from "./books.controller";
+import { ErrorHandlerInstance } from "../middlewares/error.middleware";
 import {
   createMocks,
   mockResponse,
   mockNext,
 } from "../../helpers/tests/mocking-funtions";
 import { Request } from "express";
-import { NotFound } from "http-errors";
 
 const availableMethodsInBookSrvc: any = {
   getBooks: [bookData],
@@ -30,6 +30,14 @@ const availableFailureMethodsInBookSrvc: any = {
   createBook: () => {
     throw new Error("Failed to create the books");
   },
+  getBookDetails: () => Promise.resolve(null),
+  updateBook: () => Promise.resolve(null),
+  deleteBook: () => Promise.resolve(null),
+  getBookReviews: () => Promise.resolve(null),
+  createBookReview: () => Promise.resolve(null),
+  getBookReview: () => Promise.resolve(null),
+  updateBookReview: () => Promise.resolve(null),
+  deleteBookReview: () => Promise.resolve(null),
 };
 
 describe("BooksController", () => {
@@ -168,6 +176,7 @@ describe("BooksController Failures", () => {
   beforeEach(() => {
     booksController = new BooksController();
     booksController.booksService = availableFailureMethodsInBookSrvc;
+    jest.spyOn(ErrorHandlerInstance, "error").mockImplementation();
   });
 
   it("Should create", () => {
@@ -177,11 +186,82 @@ describe("BooksController Failures", () => {
   it("Should get the books", async () => {
     const res = mockResponse();
     await booksController.getBooks({} as Request, res, mockNext);
-    expect(mockNext).toHaveBeenCalledWith("Failed to get the books");
+    expect(ErrorHandlerInstance.error).toHaveBeenCalled();
   });
   it("Should create the books", async () => {
     const res = mockResponse();
     await booksController.createBook({} as Request, res, mockNext);
-    expect(mockNext).toHaveBeenCalledWith("Failed to create the books");
+    expect(ErrorHandlerInstance.error).toHaveBeenCalled();
+  });
+
+  it("Should get the book details", async () => {
+    const res = mockResponse();
+    await booksController.getBookDetails(
+      { params: {} } as Request,
+      res,
+      mockNext
+    );
+    expect(ErrorHandlerInstance.error).toHaveBeenCalled();
+  });
+
+  it("Should update the book details", async () => {
+    const res = mockResponse();
+    await booksController.updateBook({ params: {} } as Request, res, mockNext);
+    expect(ErrorHandlerInstance.error).toHaveBeenCalled();
+  });
+
+  it("Should delte the book", async () => {
+    const res = mockResponse();
+    await booksController.deleteBook({ params: {} } as Request, res, mockNext);
+    expect(ErrorHandlerInstance.error).toHaveBeenCalled();
+  });
+
+  it("Should get the bookreviews", async () => {
+    const res = mockResponse();
+    await booksController.getBookReviews(
+      { params: {} } as Request,
+      res,
+      mockNext
+    );
+    expect(ErrorHandlerInstance.error).toHaveBeenCalled();
+  });
+  it("Should create the bookreviews", async () => {
+    const res = mockResponse();
+    await booksController.createBookReview(
+      { params: {} } as Request,
+      res,
+      mockNext
+    );
+    expect(ErrorHandlerInstance.error).toHaveBeenCalled();
+  });
+
+  it("Should update the bookreviews", async () => {
+    const res = mockResponse();
+    await booksController.updateBookReview(
+      { params: {} } as Request,
+      res,
+      mockNext
+    );
+    expect(ErrorHandlerInstance.error).toHaveBeenCalled();
+  });
+
+  it("Should get the bookreview", async () => {
+    const res = mockResponse();
+    await booksController.getBookReview(
+      { params: {} } as Request,
+      res,
+      mockNext
+    );
+    expect(ErrorHandlerInstance.error).toHaveBeenCalled();
+  });
+
+  it("Should delte the bookreviews", async () => {
+    const res = mockResponse();
+    await booksController.deleteBookReview(
+      { params: {} } as Request,
+      res,
+      mockNext
+    );
+    expect(ErrorHandlerInstance.error).toHaveBeenCalled();
   });
 });

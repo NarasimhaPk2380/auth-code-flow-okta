@@ -36,9 +36,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var http_errors_1 = require("http-errors");
 var mocking_funtions_1 = require("../../helpers/tests/mocking-funtions");
 var okta_client_service_1 = require("../../services/okta-client.service");
+var error_middleware_1 = require("../middlewares/error.middleware");
 var users_controller_1 = require("./users.controller");
 var availableMethodsInOktaClientSrvc = {
     register: {
@@ -85,6 +85,7 @@ describe("UsersController for failure case", function () {
     beforeEach(function () {
         usersController = new users_controller_1.UsersController();
         usersController.oktaClientService = instanceOfOktaClientServiceMock;
+        jest.spyOn(error_middleware_1.ErrorHandlerInstance, "error").mockImplementation();
     });
     it("Should get failed the token data", function () { return __awaiter(void 0, void 0, void 0, function () {
         var res;
@@ -95,7 +96,7 @@ describe("UsersController for failure case", function () {
                     return [4 /*yield*/, usersController.registerOktaUser({}, res, mocking_funtions_1.mockNext)];
                 case 1:
                     _a.sent();
-                    expect(mocking_funtions_1.mockNext).toHaveBeenCalledWith(new http_errors_1.BadRequest("Failed"));
+                    expect(error_middleware_1.ErrorHandlerInstance.error).toHaveBeenCalled();
                     return [2 /*return*/];
             }
         });
